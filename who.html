@@ -6,34 +6,116 @@
   <title>eldr • who</title>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
-    /* … your existing styles … */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Press Start 2P', monospace;
+      background-color: #231c19;
+      color: #f0e6e6;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      padding-top: 10vh;
+      gap: 60px;           /* increased gap */
+      position: relative;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      color: #ffbe0b;
+      text-shadow: 2px 2px #000;
+    }
+
+    .button-row { display: flex; gap: 40px; }
+
+    .arcade-button {
+      width: 100px; height: 100px; border-radius: 50%; border: 4px solid #000;
+      font-size: 0.6rem; font-weight: bold; cursor: pointer;
+      box-shadow: 0 8px 0 #000, inset -4px -4px 10px rgba(0,0,0,0.4), 0 0 10px rgba(255,255,255,0.1);
+      transition: all 0.15s ease; display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .arcade-button:active {
+      transform: translateY(8px);
+      box-shadow: 0 0px 0 #000, inset -2px -2px 6px rgba(0,0,0,0.4), 0 0 5px rgba(255,255,255,0.2);
+    }
+    .arcade-button:hover {
+      box-shadow: 0 10px 0 #000, inset -2px -2px 6px rgba(0,0,0,0.4), 0 0 15px rgba(255,255,255,0.3);
+    }
+    .login { background-color: #ffbe0b; color: black; }
+    .signup { background-color: #ff006e; color: white; }
+
+    .popup {
+      position: absolute;
+      transform: scale(0.8);
+      opacity: 0;
+      pointer-events: none;
+      background-color: #2d2421;
+      padding: 30px; border: 3px solid #000;
+      border-radius: 15px; box-shadow: 0 0 15px rgba(0,0,0,0.8);
+      width: 300px; text-align: center; z-index: 10;
+      transition: transform 0.1s ease-in, opacity 0.1s ease-in;
+    }
+    .popup.show {
+      transform: scale(1);
+      opacity: 1;
+      pointer-events: auto;
+      transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    }
+
+    .popup h2 { font-size: 0.8rem; margin-bottom: 20px; }
+    .popup.login-popup h2 { color: #ffbe0b; }
+    .popup.signup-popup h2 { color: #ff006e; }
+
+    .popup input {
+      width: 90%; padding: 10px; margin: 10px 0;
+      border: none; border-radius: 5px;
+      font-family: 'Press Start 2P', monospace; font-size: 0.6rem;
+    }
+    .popup button {
+      margin-top: 10px; padding: 10px 20px;
+      font-family: 'Press Start 2P', monospace; font-size: 0.6rem;
+      border: none; border-radius: 8px; cursor: pointer;
+    }
+    .popup.login-popup button { background-color: #ffbe0b; color: black; }
+    .popup.signup-popup button { background-color: #ff006e; color: white; }
+
+    .close-btn {
+      position: absolute; top: 8px; right: 12px;
+      font-size: 0.7rem; cursor: pointer; color: #888;
+      background: none; border: none;
+    }
+
+    footer {
+      position: absolute; bottom: 20px; font-size: 0.5rem; color: #aaa;
+    }
   </style>
 </head>
 <body>
   <h1>welcome to eldr</h1>
-
   <div class="button-row">
     <button id="login-btn" class="arcade-button login" onclick="openPopup('login')">log in</button>
     <button id="signup-btn" class="arcade-button signup" onclick="openPopup('signup')">sign up</button>
   </div>
 
-  <!-- LOGIN POPUP -->
   <div id="login-popup" class="popup login-popup">
-    <button class="close-btn" onclick="closePopup('login')">X</button>
-    <h2>log in</h2>
-    <input id="login-email" type="email" placeholder="email" />
-    <input id="login-password" type="password" placeholder="password" />
-    <button onclick="login()">submit</button>
-  </div>
+  <button class="close-btn" onclick="closePopup('login')">X</button>
+  <h2>log in</h2>
+  <input type="email" placeholder="email" />
+  <input type="password" placeholder="password" />
+  <button type="button" onclick="window.location.href='main.html'">submit</button>
+</div>
 
-  <!-- SIGNUP POPUP -->
-  <div id="signup-popup" class="popup signup-popup">
-    <button class="close-btn" onclick="closePopup('signup')">X</button>
-    <h2>sign up</h2>
-    <input id="signup-email" type="email" placeholder="email" />
-    <input id="signup-password" type="password" placeholder="password" />
-    <button onclick="signup()">submit</button>
-  </div>
+<div id="signup-popup" class="popup signup-popup">
+  <button class="close-btn" onclick="closePopup('signup')">X</button>
+  <h2>sign up</h2>
+  <input type="email" placeholder="email" />
+  <input type="password" placeholder="password" />
+  <button type="button" onclick="window.location.href='main.html'">submit</button>
+</div>
+
 
   <footer>connected to mimirr · 2025</footer>
 
@@ -42,33 +124,14 @@
       const btn = document.getElementById(type + '-btn');
       const pop = document.getElementById(type + '-popup');
       const rect = btn.getBoundingClientRect();
-      pop.style.top  = (rect.bottom + window.scrollY + 10) + 'px';
-      pop.style.left = (rect.left   + window.scrollX - (pop.offsetWidth - btn.offsetWidth)/2) + 'px';
+      pop.style.top = (rect.bottom + window.scrollY + 10) + 'px';
+      pop.style.left = (rect.left + window.scrollX - (pop.offsetWidth - btn.offsetWidth)/2) + 'px';
       pop.classList.add('show');
     }
     function closePopup(type) {
-      document.getElementById(type + '-popup').classList.remove('show');
+      const pop = document.getElementById(type + '-popup');
+      pop.classList.remove('show');
     }
   </script>
-
-  <!-- Firebase compat SDK (so firebase.auth() works) -->
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-  <script>
-    // your Firebase config
-    const firebaseConfig = {
-      apiKey: "AIzaSyCqfHyXQKmiF5StM74airkAPnpo9xixR1Q",
-      authDomain: "eldr-auth-700bc.firebaseapp.com",
-      projectId: "eldr-auth-700bc",
-      storageBucket: "eldr-auth-700bc.firebasestorage.app",
-      messagingSenderId: "907199714152",
-      appId: "1:907199714152:web:1ee6f33a16e81584393cdd"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-  </script>
-
-  <!-- your auth logic -->
-  <script src="login.js"></script>
 </body>
 </html>

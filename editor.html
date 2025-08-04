@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>eldr editor</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #1e1b17;
+      font-family: 'Press Start 2P', monospace;
+      height: 100vh;
+      overflow: hidden;
+      color: #f0e6e6;
+    }
+
+    .back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: none;
+      border: 2px solid #ffbe0b;
+      color: #ffbe0b;
+      padding: 8px 12px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.6rem;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+    .back-button:hover {
+      background-color: #ffd863;
+    }
+
+    .header {
+      text-align: center;
+      padding: 20px;
+      font-size: 1rem;
+      color: #ffeaa7;
+    }
+
+    .editor-container {
+      display: flex;
+      height: calc(100% - 80px);
+    }
+
+    .toolbar {
+      width: 160px;
+      background-color: #2a2520;
+      display: flex;
+      flex-wrap: wrap;
+      padding: 20px;
+      gap: 10px;
+      border-right: 2px solid #3a322b;
+      overflow-y: auto;
+    }
+
+    .tool-btn {
+      background-color: #ffbe76;
+      color: black;
+      border: none;
+      border-radius: 8px;
+      width: 60px;
+      height: 40px;
+      font-size: 0.5rem;
+      text-align: center;
+      cursor: grab;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.5);
+    }
+    .tool-btn:active {
+      cursor: grabbing;
+    }
+
+    .canvas-area {
+      flex: 1;
+      background-color: #28221d;
+      margin: 20px;
+      border-radius: 8px;
+      position: relative;
+      box-shadow: inset 0 0 10px rgba(255,235,178,0.1);
+    }
+
+    .canvas-area.drag-over {
+      outline: 2px dashed #ffeaa7;
+    }
+
+    .dropped {
+      position: absolute;
+      background-color: #ffbe76;
+      color: black;
+      border: 2px solid #000;
+      border-radius: 4px;
+      padding: 4px;
+      font-size: 0.5rem;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <button class="back-button" onclick="history.back()">← back</button>
+  <div class="header">eldr editor</div>
+
+  <div class="editor-container">
+    <div class="toolbar">
+      <!-- PS3 controller buttons, draggable -->
+      <button id="L1"   class="tool-btn" draggable="true">L1</button>
+      <button id="R1"   class="tool-btn" draggable="true">R1</button>
+      <button id="L2"   class="tool-btn" draggable="true">L2</button>
+      <button id="R2"   class="tool-btn" draggable="true">R2</button>
+      <button id="L3"   class="tool-btn" draggable="true">L3</button>
+      <button id="R3"   class="tool-btn" draggable="true">R3</button>
+      <button id="L-Stick" class="tool-btn" draggable="true">L-Stick</button>
+      <button id="R-Stick" class="tool-btn" draggable="true">R-Stick</button>
+      <button id="X"    class="tool-btn" draggable="true">X</button>
+      <button id="Square" class="tool-btn" draggable="true">■</button>
+      <button id="Triangle" class="tool-btn" draggable="true">△</button>
+      <button id="Circle"  class="tool-btn" draggable="true">O</button>
+      <button id="Select"  class="tool-btn" draggable="true">Select</button>
+      <button id="Start"   class="tool-btn" draggable="true">Start</button>
+      <button id="Up"    class="tool-btn" draggable="true">↑</button>
+      <button id="Down"  class="tool-btn" draggable="true">↓</button>
+      <button id="Left"  class="tool-btn" draggable="true">←</button>
+      <button id="Right" class="tool-btn" draggable="true">→</button>
+    </div>
+    <div class="canvas-area" id="canvas">
+      <!-- drops will appear here -->
+    </div>
+  </div>
+
+  <script>
+    const toolbar = document.querySelector('.toolbar');
+    const canvas = document.getElementById('canvas');
+
+    toolbar.addEventListener('dragstart', e => {
+      if (e.target.classList.contains('tool-btn')) {
+        e.dataTransfer.setData('text/plain', e.target.id);
+      }
+    });
+
+    canvas.addEventListener('dragover', e => {
+      e.preventDefault();
+      canvas.classList.add('drag-over');
+    });
+
+    canvas.addEventListener('dragleave', () => {
+      canvas.classList.remove('drag-over');
+    });
+
+    canvas.addEventListener('drop', e => {
+      e.preventDefault();
+      canvas.classList.remove('drag-over');
+      const id = e.dataTransfer.getData('text/plain');
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const el = document.createElement('div');
+      el.textContent = id;
+      el.className = 'dropped';
+      el.style.left = x + 'px';
+      el.style.top = y + 'px';
+      canvas.appendChild(el);
+    });
+  </script>
+
+</body>
+</html>

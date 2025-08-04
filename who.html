@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>eldr • who</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    /* … your existing styles … */
+  </style>
+</head>
+<body>
+  <h1>welcome to eldr</h1>
+
+  <div class="button-row">
+    <button id="login-btn" class="arcade-button login" onclick="openPopup('login')">log in</button>
+    <button id="signup-btn" class="arcade-button signup" onclick="openPopup('signup')">sign up</button>
+  </div>
+
+  <!-- LOGIN POPUP -->
+  <div id="login-popup" class="popup login-popup">
+    <button class="close-btn" onclick="closePopup('login')">X</button>
+    <h2>log in</h2>
+    <input id="login-email" type="email" placeholder="email" />
+    <input id="login-password" type="password" placeholder="password" />
+    <button onclick="login()">submit</button>
+  </div>
+
+  <!-- SIGNUP POPUP -->
+  <div id="signup-popup" class="popup signup-popup">
+    <button class="close-btn" onclick="closePopup('signup')">X</button>
+    <h2>sign up</h2>
+    <input id="signup-email" type="email" placeholder="email" />
+    <input id="signup-password" type="password" placeholder="password" />
+    <button onclick="signup()">submit</button>
+  </div>
+
+  <footer>connected to mimirr · 2025</footer>
+
+  <script>
+    function openPopup(type) {
+      const btn = document.getElementById(type + '-btn');
+      const pop = document.getElementById(type + '-popup');
+      const rect = btn.getBoundingClientRect();
+      pop.style.top  = (rect.bottom + window.scrollY + 10) + 'px';
+      pop.style.left = (rect.left   + window.scrollX - (pop.offsetWidth - btn.offsetWidth)/2) + 'px';
+      pop.classList.add('show');
+    }
+    function closePopup(type) {
+      document.getElementById(type + '-popup').classList.remove('show');
+    }
+  </script>
+
+  <!-- Firebase compat SDK (so firebase.auth() works) -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script>
+    // your Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyCqfHyXQKmiF5StM74airkAPnpo9xixR1Q",
+      authDomain: "eldr-auth-700bc.firebaseapp.com",
+      projectId: "eldr-auth-700bc",
+      storageBucket: "eldr-auth-700bc.firebasestorage.app",
+      messagingSenderId: "907199714152",
+      appId: "1:907199714152:web:1ee6f33a16e81584393cdd"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+  </script>
+
+  <!-- your auth logic -->
+  <script src="login.js"></script>
+</body>
+</html>

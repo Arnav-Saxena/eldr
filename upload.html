@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>eldr • layouts</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Press Start 2P', monospace;
+      background-color: #231c19;
+      color: #f0e6e6;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      padding: 5vh 5vw;
+      gap: 40px;
+      position: relative;
+    }
+
+    /* back button */
+    .back-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: none;
+      border: 2px solid #ffbe0b;
+      color: #ffbe0b;
+      padding: 8px 12px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.6rem;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+    .back-btn:hover {
+      background: rgba(255, 190, 11, 0.2);
+    }
+
+    h1 {
+      font-size: 1.2rem;
+      color: #ffbe0b;
+      text-shadow: 2px 2px #000;
+      align-self: center;
+    }
+    .content-row {
+      display: flex;
+      flex: 1;
+      gap: 5vw;
+    }
+
+    /* upload button */
+    .upload-section {
+      flex: 0 0 150px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .upload-circle {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background-color: #f97316;
+      color: black;
+      border: 4px solid #000;
+      cursor: pointer;
+      box-shadow:
+        0 8px 0 #000,
+        inset -4px -4px 10px rgba(0,0,0,0.4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-size: 0.6rem;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .upload-circle:active {
+      transform: translateY(8px);
+      box-shadow:
+        0 0 0 #000,
+        inset -2px -2px 6px rgba(0,0,0,0.4);
+    }
+    .upload-circle:hover {
+      box-shadow:
+        0 10px 0 #000,
+        inset -2px -2px 6px rgba(0,0,0,0.4);
+    }
+
+    /* list/table section */
+    .list-section {
+      flex: 1;
+      background-color: #2d2421;
+      border-left: 4px solid #3a2e28;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    .list-section table {
+      width: 100%;
+      border-collapse: collapse;
+      border-left: 4px solid #3a2e28; /* notebook margin */
+    }
+    .list-section th, .list-section td {
+      padding: 8px 12px;
+      font-size: 0.6rem;
+    }
+    .list-section th {
+      text-align: left;
+      border-bottom: 2px solid #3a2e28;
+    }
+    .list-section tr {
+      border-bottom: 1px solid #3a2e28;
+    }
+    .list-section tr:last-child {
+      border-bottom: none;
+    }
+    .list-section a {
+      color: #f97316;
+      text-decoration: none;
+    }
+    .list-section a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <button class="back-btn" onclick="history.back()">← back</button>
+  <h1>eldr layouts</h1>
+
+  <div class="content-row">
+    <div class="upload-section">
+      <div class="upload-circle">
+        upload<br/>here
+      </div>
+    </div>
+
+    <div class="list-section">
+      <table>
+        <thead>
+          <tr><th>#</th><th>Name</th></tr>
+        </thead>
+        <tbody>
+          <!-- sample long list -->
+          <tr><td>1</td><td><a href="editor.html">Layout Alpha</a></td></tr>
+          <tr><td>2</td><td><a href="editor.html">Layout Beta</a></td></tr>
+          <tr><td>3</td><td><a href="editor.html">Layout Gamma</a></td></tr>
+          <tr><td>4</td><td><a href="editor.html">Layout Delta</a></td></tr>
+          <tr><td>5</td><td><a href="editor.html">Layout Epsilon</a></td></tr>
+          <tr><td>6</td><td><a href="editor.html">Layout Zeta</a></td></tr>
+          <tr><td>7</td><td><a href="editor.html">Layout Eta</a></td></tr>
+          <tr><td>8</td><td><a href="editor.html">Layout Theta</a></td></tr>
+          <tr><td>9</td><td><a href="editor.html">Layout Iota</a></td></tr>
+          <tr><td>10</td><td><a href="editor.html">Layout Kappa</a></td></tr>
+          <tr><td>11</td><td><a href="editor.html">Layout Lambda</a></td></tr>
+          <tr><td>12</td><td><a href="editor.html">Layout Mu</a></td></tr>
+          <tr><td>13</td><td><a href="editor.html">Layout Nu</a></td></tr>
+          <tr><td>14</td><td><a href="editor.html">Layout Xi</a></td></tr>
+          <tr><td>15</td><td><a href="editor.html">Layout Omicron</a></td></tr>
+          <tr><td>16</td><td><a href="editor.html">Layout Pi</a></td></tr>
+          <tr><td>17</td><td><a href="editor.html">Layout Rho</a></td></tr>
+          <tr><td>18</td><td><a href="editor.html">Layout Sigma</a></td></tr>
+          <tr><td>19</td><td><a href="editor.html">Layout Tau</a></td></tr>
+          <tr><td>20</td><td><a href="editor.html">Layout Upsilon</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</body>
+</html>
